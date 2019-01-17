@@ -45,11 +45,11 @@ public class GameOfLifeController implements ActionListener, FileFormat, Runnabl
 			init();
 			
 			combo=(JComboBox<String>)e.getSource();
-			String item=((JComboBox<String>)e.getSource()).getSelectedItem().toString();
+			String item=combo.getSelectedItem().toString();
 			
 			
 			if("OwnPattern".equals(item)) {
-				createEmptytableForOwnPattern();
+				createEmptyTableForOwnPattern();
 			}
 			else {
 				createTabel(item.toLowerCase());
@@ -162,7 +162,7 @@ public class GameOfLifeController implements ActionListener, FileFormat, Runnabl
 	}
 	
 	
-	private void createEmptytableForOwnPattern() {
+	private void createEmptyTableForOwnPattern() {
 		
 		
 		logic=new GameOfLifeLogic(0, 0, 0, 0);
