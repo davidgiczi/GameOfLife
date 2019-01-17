@@ -1,11 +1,13 @@
 package com.david.giczi.gameoflife.model;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+
+
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class InputFileReader   {
 
@@ -13,7 +15,6 @@ public class InputFileReader   {
 	private List<String> inputData;
 	private String nameOfThePattern;
 	private String fileFormat;
-	private BufferedReader in;
 	
 	
 	public InputFileReader(String fileName) {
@@ -21,32 +22,15 @@ public class InputFileReader   {
 		inputData=new ArrayList<>();
 		nameOfThePattern=fileName;
 			
-			try {
-				
-				in=new BufferedReader(new FileReader(new File("./files/"+fileName+".lif")));
-				
-				fileFormat=in.readLine().substring(1);
-				
-				String row;
-				
-				while((row=in.readLine())!=null) {
-					inputData.add(row);
-				}
-				
-			} catch (IOException e) {
-				System.out.println("The lif file with \'"+fileName+"\' name does not exist!");
-				e.printStackTrace();
-			}
-			finally {
-				
-				try {
-					in.close();
-				} catch (IOException e) {
-					
-					e.printStackTrace();
-				}
-				
-			}
+		try {
+			
+			inputData=Files.lines(Paths.get("./files/"+fileName+".lif")).collect(Collectors.toList());
+			fileFormat=inputData.get(0).substring(1);
+		
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
 			
 	
 	}
@@ -164,36 +148,18 @@ public class InputFileReader   {
 	
 	private Cell upperLeftHandCornerFinderFor1_05FileFormat(){
 		
-		Cell upperLeftHand=new Cell(Integer.MAX_VALUE, Integer.MAX_VALUE);
+		Cell upperLeftHand=new Cell(0, 0);
 		
 		
-		for (String row : inputData) {
-			
+		int xMax=inputData.stream().filter(x->x.startsWith("#P")).map(x->x.split(" ")).map(x->Integer.parseInt(x[1])).mapToInt(x->x).max().getAsInt();
 		
-			if(row.startsWith("#P")) {
-				
-			String[] parts=row.split(" ");
-			
-			int x=Integer.parseInt(parts[1]);
-			int y=Integer.parseInt(parts[2]);
-			
-			
-			if(upperLeftHand.getX()>x) {
-				
-				upperLeftHand.setX(x);
-				
-			}
-			
-			if(upperLeftHand.getY()>y) {
-				upperLeftHand.setY(y);
-			}
-			
-		}
-			
-	}
+		int yMax=inputData.stream().filter(x->x.startsWith("#P")).map(x->x.split(" ")).map(x->Integer.parseInt(x[2])).mapToInt(x->x).max().getAsInt();	
+		
+		
+		upperLeftHand.setX(xMax);
+		upperLeftHand.setY(yMax);
 			
 			
-				
 		return upperLeftHand;
 		
 	}
@@ -202,33 +168,16 @@ public class InputFileReader   {
 	private Cell lowerRightHandCornerFinderFor1_05FileFormat() {
 		
 		
-		Cell lowerRightHand=new Cell(Integer.MIN_VALUE, Integer.MIN_VALUE);
+		Cell lowerRightHand=new Cell(0, 0);
 		
 		
-		for (String row : inputData) {
-			
-			
-			if(row.startsWith("#P")) {
-				
-			String[] parts=row.split(" ");
-			
-			int x=Integer.parseInt(parts[1]);
-			int y=Integer.parseInt(parts[2]);
-			
-			
-			if(lowerRightHand.getX()<x) {
-				
-				lowerRightHand.setX(x);
-				
-			}
-			
-			if(lowerRightHand.getY()<y) {
-				lowerRightHand.setY(y);
-			}
-			
-		}
-			
-	}
+		int xMin=inputData.stream().filter(x->x.startsWith("#P")).map(x->x.split(" ")).map(x->Integer.parseInt(x[1])).mapToInt(x->x).min().getAsInt();
+		
+		int yMin=inputData.stream().filter(x->x.startsWith("#P")).map(x->x.split(" ")).map(x->Integer.parseInt(x[2])).mapToInt(x->x).min().getAsInt();	
+		
+		
+		lowerRightHand.setX(xMin);
+		lowerRightHand.setY(yMin);
 		
 		
 		return lowerRightHand;
@@ -238,22 +187,7 @@ public class InputFileReader   {
 	
 	private int theLongestRowInThe1_05FileFormat() {
 		
-		int theLongest=0;
-		
-		for (String row : inputData) {
-			
-			if(row.startsWith(".") || row.startsWith("*")) {
-				
-				if(row.length()>theLongest) {
-					theLongest=row.length();
-				}
-				
-			}
-			
-		}
-		
-		
-		return theLongest;
+		return inputData.stream().filter(x->x.startsWith(".") || x.startsWith("*")).map(x->x.length()).mapToInt(x->x).max().getAsInt();
 	}
 	
 	
@@ -263,8 +197,7 @@ public class InputFileReader   {
 		int pcs=0;
 		boolean letsCount=false;
 		
-		
-		
+			
 		for (String row : inputData) {
 			
 			
@@ -308,28 +241,18 @@ public class InputFileReader   {
 	private Cell lowerRightHandCornerFinderFor1_06FileFormat() {
 		
 		
-		Cell lowerRightHand=new Cell(Integer.MIN_VALUE, Integer.MIN_VALUE);
+		Cell lowerRightHand=new Cell(0, 0);
 		
 		
-		for (int i=1; i<inputData.size(); i++) {
-			
-			String[] coords=inputData.get(i).split(" ");
-			
-			int x=Integer.parseInt(coords[0]);
-			int y=Integer.parseInt(coords[1]);
-			
-			if(lowerRightHand.getX()<x) {
-				lowerRightHand.setX(x);
-			}
-			
-			if(lowerRightHand.getY()<y) {
-				lowerRightHand.setY(y);
-			}
-			
-		}
+		int xMax=inputData.stream().filter(x->!x.startsWith("#")).map(x->x.split(" ")).map(x->Integer.parseInt(x[0])).mapToInt(x->x).max().getAsInt();
+		int yMax=inputData.stream().filter(x->!x.startsWith("#")).map(x->x.split(" ")).map(x->Integer.parseInt(x[1])).mapToInt(x->x).max().getAsInt();
+		
+		lowerRightHand.setX(xMax);
+		lowerRightHand.setY(yMax);
 		
 		
 		return lowerRightHand;
 	}
+	
 	
 }
