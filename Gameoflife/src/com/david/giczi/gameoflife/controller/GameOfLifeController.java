@@ -136,7 +136,7 @@ public class GameOfLifeController implements ActionListener, FileFormat, Runnabl
 		if(FileFormat.FORMATS105.equals(input.getFileFormat())) {
 			
 			logic=new GameOfLifeLogic(input.getNeedfulRowsNumberFor1_05FileFormat(), input.getNeedfulColsNumberFor1_05FileFormat(),
-													input.getOrigoXFor1_05FileFormat(),input.getOrigoYFor1_05FileFormat());
+					input.getOrigoXFor1_05FileFormat(),input.getOrigoYFor1_05FileFormat());
 			
 			 table=logic.life1_05FileProcessing(input.getInputData());
 			
