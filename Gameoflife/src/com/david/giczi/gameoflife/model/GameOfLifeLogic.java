@@ -179,14 +179,16 @@ public class GameOfLifeLogic  {
 		
 		for(int i=0; i<inputData.size(); i++) {
 			
+			if(!inputData.get(i).startsWith("#")) {
+				
 			String[] coords=inputData.get(i).split(" ");
 			
 			int x=Integer.parseInt(coords[0])+origoX;
 			int y=Integer.parseInt(coords[1])+origoY;
 			
-			
+		
 			universeOne.get(x*cols+y).setAlive(true);
-			
+	}	
 			
 		}
 		
