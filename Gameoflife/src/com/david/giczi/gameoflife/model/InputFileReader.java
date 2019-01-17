@@ -151,13 +151,13 @@ public class InputFileReader   {
 		Cell upperLeftHand=new Cell(0, 0);
 		
 		
-		int xMax=inputData.stream().filter(x->x.startsWith("#P")).map(x->x.split(" ")).map(x->Integer.parseInt(x[1])).mapToInt(x->x).max().getAsInt();
+		int xMin=inputData.stream().filter(x->x.startsWith("#P")).map(x->x.split(" ")).map(x->Integer.parseInt(x[1])).mapToInt(x->x).min().getAsInt();
 		
-		int yMax=inputData.stream().filter(x->x.startsWith("#P")).map(x->x.split(" ")).map(x->Integer.parseInt(x[2])).mapToInt(x->x).max().getAsInt();	
+		int yMin=inputData.stream().filter(x->x.startsWith("#P")).map(x->x.split(" ")).map(x->Integer.parseInt(x[2])).mapToInt(x->x).min().getAsInt();	
 		
 		
-		upperLeftHand.setX(xMax);
-		upperLeftHand.setY(yMax);
+		upperLeftHand.setX(xMin);
+		upperLeftHand.setY(yMin);
 			
 			
 		return upperLeftHand;
@@ -171,13 +171,13 @@ public class InputFileReader   {
 		Cell lowerRightHand=new Cell(0, 0);
 		
 		
-		int xMin=inputData.stream().filter(x->x.startsWith("#P")).map(x->x.split(" ")).map(x->Integer.parseInt(x[1])).mapToInt(x->x).min().getAsInt();
+		int xMax=inputData.stream().filter(x->x.startsWith("#P")).map(x->x.split(" ")).map(x->Integer.parseInt(x[1])).mapToInt(x->x).max().getAsInt();
 		
-		int yMin=inputData.stream().filter(x->x.startsWith("#P")).map(x->x.split(" ")).map(x->Integer.parseInt(x[2])).mapToInt(x->x).min().getAsInt();	
+		int yMax=inputData.stream().filter(x->x.startsWith("#P")).map(x->x.split(" ")).map(x->Integer.parseInt(x[2])).mapToInt(x->x).max().getAsInt();	
 		
 		
-		lowerRightHand.setX(xMin);
-		lowerRightHand.setY(yMin);
+		lowerRightHand.setX(xMax);
+		lowerRightHand.setY(yMax);
 		
 		
 		return lowerRightHand;
