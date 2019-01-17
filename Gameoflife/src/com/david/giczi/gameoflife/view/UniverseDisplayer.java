@@ -88,23 +88,23 @@ public class UniverseDisplayer {
 	}
 	
 	
-	public List<Cell> ownPatternDisplayer(JButton clickedbButton, List<Cell> table){
+	public List<Cell> ownPatternDisplayer(JButton clickedButton, List<Cell> table){
 	
 			
 			
 			for (int i=0; i<cellButtonList.size(); i++) {
 				
-				if(cellButtonList.get(i)==clickedbButton) {
+				if(cellButtonList.get(i)==clickedButton) {
 				
 				if(table.get(i).isAlive()) {
 					
 					table.get(i).setAlive(false);
-					clickedbButton.setBackground(Color.WHITE);
+					clickedButton.setBackground(Color.WHITE);
 				}
 				else {
 					
 					table.get(i).setAlive(true);
-					clickedbButton.setBackground(new Color(127,63,79));
+					clickedButton.setBackground(new Color(127,63,79));
 				}
 					
 			}
