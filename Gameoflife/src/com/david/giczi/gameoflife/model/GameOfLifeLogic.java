@@ -210,6 +210,7 @@ public class GameOfLifeLogic  {
 				universeTwo.get(i).setAlive(false);
 			else if(!universeOne.get(i).isAlive() && cellNeighborhoodCounter(universeOne.get(i))==3)
 				universeTwo.get(i).setAlive(true);
+			else;
 			
 		}
 		
